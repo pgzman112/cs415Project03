@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <chrono>
 using namespace std;
 #include "TernarySearchTree.h"
 
@@ -12,7 +14,7 @@ TernarySearchTree::TernarySearchTree() {
 }
 
 struct Noode * TernarySearchTree::create(char t) {
-    Noode * r = new Noode;
+    auto * r = new Noode;
     r->c = t;
     r->endOfString = false;
     r->left = r->down = r->right = nullptr;
@@ -58,41 +60,59 @@ void TernarySearchTree::traverseHelper(struct Noode * nod, char * buffer, int lv
         buffer[lvl] = nod->c;
         if(nod->endOfString){
             buffer[lvl+1] = '\0';
-            cout << buffer << endl;
+            string str(buffer);
+            if(count(autoCompletes.begin(), autoCompletes.end(), str)){
+                // do nothing since it already contains this possible autocorrect response.
+            }
+            else{
+                autoCompletes.emplace_back(str);
+            }
         }
         traverseHelper(nod->down, buffer,lvl+1);
         traverseHelper(nod->right, buffer, lvl);
     }
 }
 
-bool TernarySearchTree::search(struct Noode * nod, string s, int idx){
+bool TernarySearchTree::search(struct Noode * nod, string s, int idx, char * buffer, int lvl){
+   bool predFound = false;
+    for(int i = 0; i < lvl && lvl == s.length(); i++){
+        if(buffer[i] == s[i]){
+            predFound = true;
+        }
+        else{
+            predFound = false;
+        }
+    }
+    if(predFound){
+        auto t1 = chrono::high_resolution_clock::now();
+        traverseHelper(nod, buffer, lvl);
+        auto t2 = chrono::high_resolution_clock::now();
+        chrono::duration<double, milli> autoCompleteTime1 = t2-t1;
+        if(autoCompleteTime == 0){
+        //    cout << "Pushing: " << autoCompleteTime1.count() << endl;
+            autoCompleteTime = autoCompleteTime1.count();
+        }
+        else{
+          //  cout << "Pushing: " << autoCompleteTime1.count() << endl;
+            autoCompleteTime += autoCompleteTime1.count();
+            //cout << autoCompleteTime << endl;
+        }
+    }
     if(!nod){
-        //cout << "in here idx:" << idx << endl;
-        //cout << "in her?" << endl;
-        //char buffer[1000];
-        //traverseHelper(nod, buffer, 0);
         return false;
     }
     if(s[idx] < nod->c){
-        return search(nod->left, s, idx);
+        return search(nod->left, s, idx, buffer, lvl);
     }
     else if(s[idx] > nod->c){
-        return search(nod->right, s, idx);
+        return search(nod->right, s, idx, buffer, lvl);
     }
     else {
-        // This was an attempt at auto completes.
-       // if(idx == s.length()-1){
-       //     cout << "in her?" << endl;
-       //     char buffer[1000];
-       //     traverseHelper(nod, buffer, idx);
-       // }
         if(idx == s.length()){
-            //cout << "in her?" << endl;
-            //char buffer[1000];
-            //traverseHelper(nod, buffer, idx);
             return nod->endOfString;
         }
-        return search(nod->down, s, idx+1);
+        buffer[lvl] = nod->c;
+        return search(nod->down, s, idx+1, buffer, lvl+1);
     }
 }
 

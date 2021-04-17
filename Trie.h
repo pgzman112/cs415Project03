@@ -2,7 +2,7 @@
 // Created by Preston on 4/16/2021.
 //
 #include <string>
-#include <queue>
+#include <chrono>
 using namespace std;
 
 #ifndef CS415PROJECT03_TRIE_H
@@ -23,8 +23,8 @@ class Trie {
         bool search(string temp, bool pred);
         Node * root;
         vector<string> printed;
-        int searchTime;
-        int autoCompleteTime;
+         double searchTime;
+         double autoCompleteTime = 0;
     private:
        // Node * root;
 

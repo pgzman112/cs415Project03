@@ -4,7 +4,9 @@
 #include <iostream>
 #include "Trie.h"
 #include <string>
+#include <chrono>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -75,7 +77,16 @@ void Trie::print(struct Node *currRoot, char str[], int lvl){
     // Is this node the end of a word? if so lets push it back onto the vector of total strings!
     if(iter->numTerminatingStrings > 0){
         str[lvl] = '\0';
-        printed.emplace_back(str);
+        string temp(str);
+        //cout << "placing: " << temp << endl;
+        if(count(printed.begin(), printed.end(), temp) || temp.empty()){
+            // do nothing because already contains it.
+            // This is a special case because I am a terrible programmer and implemented
+            // search in a strange way. this keeps it from having duplicates though.
+        }
+        else {
+            printed.emplace_back(temp);
+        }
     }
     //int i;
     for(int i = 0; i < 26; i++){
@@ -113,9 +124,16 @@ bool Trie::search(string temp, bool pred){
                 return false;
             }
         }
+        if(iter->numTerminatingStrings > 0){
+            printed.emplace_back(temp);
+        }
+        auto t1 = chrono::high_resolution_clock::now();
         int lvl = 0;
         char str[100];
         print(iter, str, lvl);
+        auto t2 = chrono::high_resolution_clock::now();
+        chrono::duration<double, milli> totalTime = t2-t1;
+        this->autoCompleteTime = totalTime.count();
         // If we got to here but the vector printed is empty
         // That means that there were no strings which stemmed from the predicate
         // Therefore return false else return true;

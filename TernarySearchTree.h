@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <chrono>
 using namespace std;
 #ifndef CS415PROJECT03_TERNARYSEARCHTREE_H
 #define CS415PROJECT03_TERNARYSEARCHTREE_H
@@ -22,9 +23,13 @@ public:
     struct Noode * create(char t);
     struct Noode * insert(struct Noode * currRoot, string & s, int & idx);
     Noode * root = nullptr;
-    void traverseHelper(struct Noode * nod, char*buffer, int lvl);
+    void traverseHelper(struct Noode * nod, char * buffer, int lvl);
     void inOrder();
-    bool search(struct Noode * nod, string s, int idx);
+    bool search(struct Noode * nod, string s, int idx, char * buffer, int lvl);
+    vector<string> autoCompletes;
+    double searchTime;
+    double autoCompleteTime = 0;
+
 };
 
 
