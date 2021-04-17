@@ -11,4 +11,4 @@ TernarySearchTree.o : TernarySearchTree.cpp TernarySearchTree.h
 			 g++ -g -c TernarySearchTree.cpp
 
 clean :
-			rm *.o P3.out *.gch
+			rm *.o P3.out

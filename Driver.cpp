@@ -188,18 +188,24 @@ int main(int argc, char *argv[]){
             double searchTime = 0;
             searchTime = totalTime.count() - ternaryRoot->autoCompleteTime;
             cout << "Time taken to search in the BST based Trie is: " << searchTime << " ms." <<endl;
-            cout << "Auto-complete results using BST based Trie are: " << ternaryRoot->autoCompletes[0] << ", ";
-            for(auto i = 1; i < ternaryRoot->autoCompletes.size(); i++){
-                cout << ternaryRoot->autoCompletes[i];
-                if(i < ternaryRoot->autoCompletes.size()-1){
-                    cout << ", ";
-                }
+            if(ternaryRoot->autoCompletes.empty()){
+                cout << input << " not found in text and no autocompletes found" << endl;
             }
-            cout << "." << endl;
-            ternaryRoot->autoCompletes.clear();
-            cout << "Time Taken to find auto-complete results in the BST based Trie is: " << ternaryRoot->autoCompleteTime << " ms." << endl << endl;
-            ternaryRoot->autoCompleteTime = 0;
-            cout << "Search time Delta: " << trieSearchTime - searchTime << endl << endl;
+            else {
+                cout << "Auto-complete results using BST based Trie are: " << ternaryRoot->autoCompletes[0] << ", ";
+                for (auto i = 1; i < ternaryRoot->autoCompletes.size(); i++) {
+                    cout << ternaryRoot->autoCompletes[i];
+                    if (i < ternaryRoot->autoCompletes.size() - 1) {
+                        cout << ", ";
+                    }
+                }
+                cout << "." << endl;
+                ternaryRoot->autoCompletes.clear();
+                cout << "Time Taken to find auto-complete results in the BST based Trie is: "
+                     << ternaryRoot->autoCompleteTime << " ms." << endl << endl;
+                ternaryRoot->autoCompleteTime = 0;
+                //cout << "Search time Delta: " << trieSearchTime - searchTime << endl << endl;
+            }
         } // END run
     }
     else if(mode[0] == '2'){
