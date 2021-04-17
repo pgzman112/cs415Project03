@@ -147,8 +147,9 @@ int main(int argc, char *argv[]){
             string input = "";
             cout << "Enter search string (or hit 'ctrl + c'/ 'cmd + c' to quit program): ";
             cin >> input;
+            bool searchie = true;
             auto t3 = chrono::high_resolution_clock::now();
-            bool searchTrie = trieRoot->search(input, true);
+            bool searchTrie = trieRoot->search(input, searchie);
             auto t4 = chrono::high_resolution_clock::now();
             chrono::duration<double, milli> totalTimeTrie = t4-t3;
             double trieSearchTime = totalTimeTrie.count() - trieRoot->autoCompleteTime;
@@ -201,8 +202,44 @@ int main(int argc, char *argv[]){
             cout << "Search time Delta: " << trieSearchTime - searchTime << endl << endl;
         } // END run
     }
-    else if(mode[0] == 2){
+    else if(mode[0] == '2'){
+        cout << "Time taken to build the standard Trie is: " << trieBuild << " ms and space occupied by it is: " << afterTrie << " bytes." << endl;
+        cout << "Time taken to build the BST based Trie is: " << ternaryBuild << " ms and space occupied by it is: " << afterTernary << " bytes." << endl << endl;
 
+        // Search for all strings within the trie.
+        auto t1 = chrono::high_resolution_clock::now();
+        bool searchie = false;
+        for(int i = 0; i < inputText.size(); i++){
+            bool searchTrie = trieRoot->search(inputText[i], searchie);
+            if(searchTrie == false){
+                cout << "UH OH NOT GOOD" << endl;
+            }
+        }
+        auto t2 = chrono::high_resolution_clock::now();
+        chrono::duration<double, milli> totalTime = t2-t1;
+        double searchTrieTime = 0;
+        searchTrieTime = totalTime.count();
+        cout << "Time taken to search all the strings in the standard Trie tree is: " << searchTrieTime << " ms." << endl;
+        // Search for all strings within the TST
+
+        auto t3 = chrono::high_resolution_clock::now();
+        //double runningTot;
+        for(int i = 0; i < inputText.size(); i++){
+            //char buff[1000];
+            //int lvl = 0;
+
+            //cout << "what are we stuck on " << inputText[i] << endl;
+            ternaryRoot->autoCompletes.clear();
+            ternaryRoot->searchNoAutoComplete(ternaryRoot->root, inputText[i], 0);
+            //runningTot += ternaryRoot->autoCompleteTime;
+            ternaryRoot->autoCompleteTime = 0;
+        }
+        auto t4 = chrono::high_resolution_clock::now();
+        chrono::duration<double, milli> tstSearchTime = t4-t3;
+        double searchTime = 0;
+        searchTime = tstSearchTime.count();
+        cout << "Time taken to search all the strings in the Ternary search tree is: " << searchTime << " ms." << endl;
+        //cout << "after subtracting autocomplete time: " << searchTime - runningTot << endl;
     }
     else{
         cout << "wrong mode entry, please run again and input '1' or '2' for mode." << endl;

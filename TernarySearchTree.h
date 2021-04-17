@@ -20,14 +20,14 @@ struct Noode{
 class TernarySearchTree {
 public:
     TernarySearchTree();
-    struct Noode * create(char t);
+    struct Noode * create(char & t);
     struct Noode * insert(struct Noode * currRoot, string & s, int & idx);
     Noode * root = nullptr;
     void traverseHelper(struct Noode * nod, char * buffer, int lvl);
     void inOrder();
-    bool search(struct Noode * nod, string s, int idx, char * buffer, int lvl);
+    bool search(struct Noode * nod, string & s, int idx, char * buffer, int lvl);
+    bool searchNoAutoComplete(struct Noode * nod, string & s, int idx);
     vector<string> autoCompletes;
-    double searchTime;
     double autoCompleteTime = 0;
 
 };

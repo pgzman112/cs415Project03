@@ -13,8 +13,8 @@ TernarySearchTree::TernarySearchTree() {
    root = nullptr;
 }
 
-struct Noode * TernarySearchTree::create(char t) {
-    auto * r = new Noode;
+struct Noode * TernarySearchTree::create(char & t){
+    Noode * r = new Noode;
     r->c = t;
     r->endOfString = false;
     r->left = r->down = r->right = nullptr;
@@ -73,7 +73,7 @@ void TernarySearchTree::traverseHelper(struct Noode * nod, char * buffer, int lv
     }
 }
 
-bool TernarySearchTree::search(struct Noode * nod, string s, int idx, char * buffer, int lvl){
+bool TernarySearchTree::search(struct Noode * nod, string & s, int idx, char * buffer, int lvl){
    bool predFound = false;
     for(int i = 0; i < lvl && lvl == s.length(); i++){
         if(buffer[i] == s[i]){
@@ -116,3 +116,20 @@ bool TernarySearchTree::search(struct Noode * nod, string s, int idx, char * buf
     }
 }
 
+bool TernarySearchTree::searchNoAutoComplete(struct Noode * nod, string & s, int idx){
+    if(!nod){
+        return false;
+    }
+    if(s[idx] < nod->c){
+        return searchNoAutoComplete(nod->left, s, idx);
+    }
+    else if(s[idx] > nod->c){
+        return searchNoAutoComplete(nod->right, s, idx);
+    }
+    else {
+        if(idx == s.length()){
+            return nod->endOfString;
+        }
+        return searchNoAutoComplete(nod->down, s, idx+1);
+    }
+}

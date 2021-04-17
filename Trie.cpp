@@ -19,14 +19,14 @@ Trie::Trie(){
     //Setting num terminating strings to 0 although nothing really terminates at the root anyways
     node->numTerminatingStrings = 0;
     // Initializing all the child pointers to NULL
-    for(auto & i : node->children){
-        i = nullptr;
-    }
+   //for(auto & i : node->children){
+   //    i = nullptr;
+   //}
     root = node;
 }
 
 // Insert function
-void Trie::insert(string s){
+void Trie::insert(string & s) const{
     // Create a new node called iter to iterate through our tree.
     struct Node *iter = root;
     //Loop through each character in our string that we want to input
@@ -61,10 +61,9 @@ struct Node * Trie::createNode() {
     // Set num string Terminated to zero
     newNode->numTerminatingStrings = 0;
     // Initialize child pointers to NULL
-    for(auto & i : newNode->children){
-        i = nullptr;
-    }
-    // return the newNode
+   //for(auto & i : newNode->children){
+   //    i = nullptr;
+   //}
     return newNode;
 }
 
@@ -103,7 +102,7 @@ void Trie::print(struct Node *currRoot, char str[], int lvl){
 // Function that can search for a particular string OR can also be used to
 // Find a predicate and then print all strings after it.
 // need to call printed.clear() after this function is called back in main.
-bool Trie::search(string temp, bool pred){
+bool Trie::search(string & temp, bool & pred){
     // this is for if we are searching for all strings that start with
     // A particular predicate!
     if(pred){

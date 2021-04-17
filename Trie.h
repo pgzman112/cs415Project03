@@ -10,21 +10,20 @@ using namespace std;
 #include <vector>
 
 struct Node{
-    struct Node *children[26];
+    struct Node *children[26] = {nullptr};
     int numTerminatingStrings;
 };
 
 class Trie {
     public:
         Trie();
-        void insert(string s);
+        void insert(string & s) const;
         static struct Node *createNode();
         void print(struct Node *currRoot, char str[], int level);
-        bool search(string temp, bool pred);
+        bool search(string & temp, bool & pred);
         Node * root;
         vector<string> printed;
-         double searchTime;
-         double autoCompleteTime = 0;
+        double autoCompleteTime = 0;
     private:
        // Node * root;
 
