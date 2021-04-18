@@ -17,7 +17,9 @@
 using namespace std;
 
 // I want to test searching for a string that is a whole word AND a predicate to another word.
-// It should show the word and any auto completes that it can.
+// It should show the word and any auto completes that it can. XX DONE.
+
+// This is used to find how much space each data structure uses.
 long get_mem_usage(){
     struct rusage myusage;
     getrusage(RUSAGE_SELF, &myusage);
@@ -90,51 +92,6 @@ int main(int argc, char *argv[]){
     long afterTernary = get_mem_usage();
    // cout << "afterTern: " << afterTernary << endl;
     afterTernary = afterTernary - trieAndBase;
-    //trieRoot->search("temp", false);
-    //cout << "TernarySize: " << afterTernary-afterTrie << endl;
-   // cout << "did we make it?" << endl;
-    // This is kind of all test stuff
-
-   //int lvl = 0;
-   //char str[100];
-   //trieRoot->print(trieRoot->root, str, lvl);
-   //vector<string> currTrie = trieRoot->printed;
-   //trieRoot->printed.clear();
-   //for(int i = 0; i < currTrie.size(); i++){
-   //    cout << currTrie[i] << endl;
-   //}
-
-   // trieRoot->search("w", true);
-   // vector<string> tt = trieRoot->printed;
-   // trieRoot->printed.clear();
-   // for(auto i: tt){
-   //     cout << "w" << i << endl;
-   // }
-   //ternaryRoot->inOrder();
-//string find = "taband";
-/// cout << endl;
-//char buff[1000];
-//int lvl=0;
-////string buff;
-//bool temp = ternaryRoot->search(ternaryRoot->root, find, 0, buff, lvl);
-//if(temp){
-//    cout << "found string: " << find << endl;
-//}
-//else{
-//    cout << "didnt find string: " << find << endl;
-//}
-//cout << "**********" << endl;
-// for(auto i = 0; i < ternaryRoot->autoCompletes.size(); i++){
-//     cout << ternaryRoot->autoCompletes[i] << endl;
-// }
-// cout << "**********" << endl;
-// ternaryRoot->autoCompletes.clear();
-//  for(auto i = 0; i < ternaryRoot->autoCompletes.size(); i++){
-//      cout << ternaryRoot->autoCompletes[i] << endl;
-//  }
-
-  // cout << "size of trie tree: " << afterTrie << endl;
-  // cout << "size of ternary tree: " << afterTernary<< endl;
 
     // The zeros are placeholders until I set up timers!
 
