@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
     long afterTernary = get_mem_usage();
     afterTernary = afterTernary - trieAndBase;
 
-    // if mode entered is 1 we go into here!
+    // if mode entered is 1 we go into here to allow the user to search for particular strings.
     if(mode[0] == '1'){
         // Print out time to build each structure and space they occupy.
         cout << "Time taken to build the standard Trie is: " << trieBuild << " ms and space occupied by it is: " << afterTrie << " bytes." << endl;
@@ -153,7 +153,7 @@ int main(int argc, char *argv[]){
             // Reset the internal timer holder for the next search
             trieRoot->autoCompleteTime = 0;
 
-            // Repeate the same process searching for input string as well as auto complete answer in the TST
+            // Repeat the same process searching for input string as well as auto complete answer in the TST
             char buff[1000];
             int lvl = 0;
             // Time total search and auto-complete solution time.

@@ -6,9 +6,9 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
-using namespace std;
 #include "TernarySearchTree.h"
 
+using namespace std;
 // Default constructor that just sets the root to nullptr
 TernarySearchTree::TernarySearchTree() {
    root = nullptr;
